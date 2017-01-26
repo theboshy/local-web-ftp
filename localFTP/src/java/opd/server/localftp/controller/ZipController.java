@@ -20,15 +20,15 @@ import java.util.zip.ZipOutputStream;
  */
 public class ZipController {
 
-    private static ZipOutputStream zos;
+    private static ZipOutputStream zipOutputStream;
     private static String type = ".7z";
 
     public static void folderToZip(String fileName)
             throws IOException, FileNotFoundException {
         File file = new File(fileName);
-        zos = new ZipOutputStream(new FileOutputStream(file + type));
+        zipOutputStream = new ZipOutputStream(new FileOutputStream(file + type));
         recurseFiles(file);
-        zos.close();
+        zipOutputStream.close();
     }
 
     private static void recurseFiles(File file)
@@ -36,8 +36,8 @@ public class ZipController {
         if (file.isDirectory()) {
             String[] fileNames = file.list();
             if (fileNames != null) {
-                for (int i = 0; i < fileNames.length; i++) {
-                    recurseFiles(new File(file, fileNames[i]));
+                for (String fileName : fileNames) {
+                    recurseFiles(new File(file, fileName));
                 }
             }
         } else {
@@ -46,12 +46,12 @@ public class ZipController {
             ZipEntry zipEntry = new ZipEntry(file.toString());
             FileInputStream fin = new FileInputStream(file);
             try (BufferedInputStream in = new BufferedInputStream(fin)) {
-                zos.putNextEntry(zipEntry);
+                zipOutputStream.putNextEntry(zipEntry);
                 while ((len = in.read(buf)) >= 0) {
-                    zos.write(buf, 0, len);
+                    zipOutputStream.write(buf, 0, len);
                 }
             }
-            zos.closeEntry();
+            zipOutputStream.closeEntry();
         }
     }
 
