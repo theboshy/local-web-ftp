@@ -18,6 +18,11 @@
         <meta http-equiv="Content-Type"  content="text/html;charset=UTF-8"/>
         <meta name="@author" content="Peter David Gomez Lobo"/>
         <title>FTP/#{serverUser}</title>
+        <script>
+            setInterval(function () {
+                location.reload();
+            }, 500000);
+        </script>
         <style>
             /* clase local para visualizar mejor bloques de ejemplo */
             .bs-example {
@@ -43,13 +48,13 @@
             #form11{
                 position: fixed;
                 z-index: 999999;
-                margin-left: 59.7%;
+                margin-left: 58.7%;
             }
             #form3{ 
                 position: fixed;
                 z-index: 999999;
-                margin-left: 52%;
-                margin-top: 3px;
+                margin-left: 53.3%;
+                margin-top: 6px;
             }
             #findBy{
                 z-index: 999999;
@@ -62,6 +67,20 @@
                 padding: 2px;
                 font-weight: normal;
             }
+            .ui-fileupload-preview{
+                content: url(resources/images/exito.png);
+                max-width: 60px;
+                max-height: 50px;
+            }
+            .ui-corner-all{
+                background-color: #0099cc;
+            }
+            .ui-messages-error-summary{
+                color: #ffffff;                
+            }
+            .ui-icon, .ui-icon-close{
+                color: #9900cc;
+            }
         </style>
     </h:head>
     <h:body id="the-body">
@@ -69,6 +88,7 @@
         <div id="form11" style="margin-top: 6px;">
             <h:form id="form1">
                 <h:outputLabel id="path" value="#{urlController.home}" style="color: #cc0000"/>
+                <!--<input type="file" webkitdirectory="true" directory="true" multiple="true" value="#{urlController.carpeta}" onchange="this.form.submit()"/>-->
                 <h:inputText id="folder" value="#{urlController.carpeta}" onchange="this.form.submit()" size="17" required="true" requiredMessage="Proporciona una carpeta contenedora"/>
             </h:form>
         </div>
