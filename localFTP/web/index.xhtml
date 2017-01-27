@@ -21,7 +21,7 @@
         <script>
             setInterval(function () {
                 location.reload();
-            }, 500000);
+            }, 1800000);
         </script>
         <style>
             /* clase local para visualizar mejor bloques de ejemplo */
@@ -145,12 +145,11 @@
                                         <p:tooltip id="tool3" for="fechayolo2" value="Modificado el dia" position="top"/>
                                     </div>
                                 </ui:remove>
-                                <h:outputText style="color: #ff6666" value="#{item.size}" rendered="#{item.nombreArchivo!=null}"/>
-                                <h:outputText style="color: #ff6666" value='~' rendered="#{item.nombreArchivo==null}"/>
+                                <h:outputText style="color: #ff6666" value="#{item.nombreArchivo!=null ? item.size:'~'}"/>
                             </div>
                         </div>
                         <div style="float: right;margin-top: -133px;margin-right: 2px">
-                            <h:commandButton value="Descargar" onclick="PrimeFaces.monitorDownload(start, stop);" style="position: relative;" class="btn btn-primary">
+                            <h:commandButton value="Descargar" onclick="PrimeFaces.monitorDownload(start, stop);" style="position: relative;" class="btn btn-primary" p:oncomplete="#{cargueController.onConpleteMethodhere()}">
                                 <p:fileDownload id="buton" value="#{cargueController.getArchivoDownl(item.anexo,item.nombreArchivo,item.tipoArchivo)}"/>
                             </h:commandButton>
                         </div>

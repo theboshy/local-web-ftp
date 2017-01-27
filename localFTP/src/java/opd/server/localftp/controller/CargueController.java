@@ -223,6 +223,10 @@ public class CargueController implements Serializable {
                             fileTempPOJO = new FileTempPOJO();
                             fileTempPOJO.setNombreArchivo(extracOnlyName(fichero.getName()));
                             if (fileTempPOJO.getNombreArchivo().equals("")) {
+                                File fileTempToDelete = new File(principalFolder + urlController.getCarpeta() + extractExtension(fichero.getName()) + ZipController.getType());
+                                if (fileTempToDelete.exists()) {
+                                    fileTempToDelete.delete();
+                                }
                                 fileTempPOJO.setNombreArchivo(null);
                             }
                             fileTempPOJO.setTipoArchivo(extractExtension(fichero.getName()));
@@ -260,6 +264,7 @@ public class CargueController implements Serializable {
      */
     public StreamedContent getArchivoDownl(String archivoPath, String nombre, String tipo) throws FileNotFoundException, IOException {
         String archivoTemp = nombre + "." + tipo;
+        DefaultStreamedContent defaultStreamedContent = null;
         try {
             /*
         Path path = Paths.get("C:\\audios\\ProductosM.xhtml");
@@ -272,9 +277,9 @@ public class CargueController implements Serializable {
             if (archivoTemp != null && fileFromDirectory.exists()) {
                 if (archivoTemp.startsWith(".")) {
                     ZipController.folderToZip(archivoPath);
-                    return new DefaultStreamedContent(new FileInputStream(archivoPath + ZipController.getType()), "", withoutChar(archivoTemp, '.') + ZipController.getType());
+                    defaultStreamedContent = new DefaultStreamedContent(new FileInputStream(archivoPath + ZipController.getType()), "", withoutChar(archivoTemp, '.') + ZipController.getType());
                 } else {
-                    return new DefaultStreamedContent(new FileInputStream(fileFromDirectory), "", archivoTemp);
+                    defaultStreamedContent = new DefaultStreamedContent(new FileInputStream(fileFromDirectory), "", archivoTemp);
                 }
             } else {
                 JsfUtil.addErrorMessage("Este Archivo ya no existe en la carpeta contenedora");
@@ -283,7 +288,7 @@ public class CargueController implements Serializable {
             System.out.println(e.getMessage());
             JsfUtil.addWarningMessage("No se encuentra el archivo " + incompleteText(nombre, 20));
         }
-        return null;
+        return defaultStreamedContent;
     }
 
     /**
