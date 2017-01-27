@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  *
  * @author pdgomezl
  */
-public class FileTemp {
+public class FileTempPOJO {
 
     private String tipoArchivo;
     private String nombreArchivo;

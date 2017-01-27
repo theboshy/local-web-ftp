@@ -1,28 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package opd.server.localftp.controller;
 
-import opd.server.localftp.pojo.FileTemp;
+import opd.server.localftp.pojo.FileTempPOJO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,12 +35,12 @@ public class CargueController implements Serializable {
     private UrlController urlController;
     @Inject
     private ArchivosErroneosController archivosErroneosController;
-    private final int unitKiloByteInByte = 1024;
-    private final int unitMegaByteInKiloByte = 1048576;
+    //private final int unitKiloByteInByte = 1024;
+    //private final int unitMegaByteInKiloByte = 1048576;
     private UploadedFile file;
     private String urlToMove;
     // private FileTemp archivo = null;
-    private List<FileTemp> items;
+    private List<FileTempPOJO> items;
     private String findBySomething;
     private String principalFolder = System.getProperty("user.home");
 
@@ -218,8 +210,8 @@ public class CargueController implements Serializable {
      * @throws SQLException en caso de que ocurra un error interno en la base de
      * datos como la insercion de un dato que sobrepasa el limite
      */
-    public List<FileTemp> getItems() throws SQLException {
-        FileTemp fileTempPOJO;
+    public List<FileTempPOJO> getItems() throws SQLException {
+        FileTempPOJO fileTempPOJO;
         items = new ArrayList<>();
         try {
             if (!urlController.getCarpeta().equals(principalFolder) || urlController.getCarpeta() != null) {
@@ -228,7 +220,7 @@ public class CargueController implements Serializable {
                 if (dir.exists()) {
                     if (ficheros != null) {
                         for (File fichero : ficheros) {
-                            fileTempPOJO = new FileTemp();
+                            fileTempPOJO = new FileTempPOJO();
                             fileTempPOJO.setNombreArchivo(extracOnlyName(fichero.getName()));
                             if (fileTempPOJO.getNombreArchivo().equals("")) {
                                 fileTempPOJO.setNombreArchivo(null);
@@ -356,14 +348,14 @@ public class CargueController implements Serializable {
     }
 
     public void setFindBySomething(String findBySomething) throws SQLException {
-        List<FileTemp> listaTemp;
+        List<FileTempPOJO> listaTemp;
         try {
             this.findBySomething = findBySomething;
             listaTemp = new ArrayList<>();
             String value = findBySomething.toLowerCase();
             String nombre;
             String tipo;
-            for (FileTemp item : items) {
+            for (FileTempPOJO item : items) {
                 tipo = item.getTipoArchivo().toLowerCase();
                 if (item.getNombreArchivo() != null) {
                     nombre = item.getNombreArchivo().toLowerCase();
