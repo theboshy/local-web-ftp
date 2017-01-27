@@ -212,36 +212,38 @@ public class CargueController implements Serializable {
      */
     public List<FileTempPOJO> getItems() throws SQLException {
         FileTempPOJO fileTempPOJO;
-        items = new ArrayList<>();
         try {
-            if (!urlController.getCarpeta().equals(principalFolder) || urlController.getCarpeta() != null) {
-                File dir = new File(principalFolder + urlController.getCarpeta());
-                File[] ficheros = dir.listFiles();
-                if (dir.exists()) {
-                    if (ficheros != null) {
-                        for (File fichero : ficheros) {
-                            fileTempPOJO = new FileTempPOJO();
-                            fileTempPOJO.setNombreArchivo(extracOnlyName(fichero.getName()));
-                            if (fileTempPOJO.getNombreArchivo().equals("")) {
-                                File fileTempToDelete = new File(principalFolder + urlController.getCarpeta() + extractExtension(fichero.getName()) + ZipController.getType());
-                                if (fileTempToDelete.exists()) {
-                                    fileTempToDelete.delete();
+            if (items == null) {
+                items = new ArrayList<>();
+                if (!urlController.getCarpeta().equals(principalFolder) || urlController.getCarpeta() != null) {
+                    File dir = new File(principalFolder + urlController.getCarpeta());
+                    File[] ficheros = dir.listFiles();
+                    if (dir.exists()) {
+                        if (ficheros != null) {
+                            for (File fichero : ficheros) {
+                                fileTempPOJO = new FileTempPOJO();
+                                fileTempPOJO.setNombreArchivo(extracOnlyName(fichero.getName()));
+                                if (fileTempPOJO.getNombreArchivo().equals("")) {
+                                    File fileTempToDelete = new File(principalFolder + urlController.getCarpeta() + extractExtension(fichero.getName()) + ZipController.getType());
+                                    if (fileTempToDelete.exists()) {
+                                        fileTempToDelete.delete();
+                                    }
+                                    fileTempPOJO.setNombreArchivo(null);
                                 }
-                                fileTempPOJO.setNombreArchivo(null);
+                                fileTempPOJO.setTipoArchivo(extractExtension(fichero.getName()));
+                                fileTempPOJO.setAnexo(fichero.getAbsolutePath());
+                                fileTempPOJO.setSize(informaticSize(fichero.length()));
+                                items.add(fileTempPOJO);
                             }
-                            fileTempPOJO.setTipoArchivo(extractExtension(fichero.getName()));
-                            fileTempPOJO.setAnexo(fichero.getAbsolutePath());
-                            fileTempPOJO.setSize(informaticSize(fichero.length()));
-                            items.add(fileTempPOJO);
+                        } else {
+                            JsfUtil.addErrorMessage("No hay ficheros en el directorio especificado");
                         }
                     } else {
-                        JsfUtil.addErrorMessage("No hay ficheros en el directorio especificado");
+                        JsfUtil.addErrorMessage("No existe el directorio : " + dir.getPath());
                     }
                 } else {
-                    JsfUtil.addErrorMessage("No existe el directorio : " + dir.getPath());
+                    JsfUtil.addErrorMessage("Especifique una carpeta ");
                 }
-            } else {
-                JsfUtil.addErrorMessage("Especifique una carpeta ");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
