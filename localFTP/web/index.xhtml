@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <div style="float: right;margin-top: -133px;margin-right: 2px">
-                            <h:commandButton value="Descargar" onclick="PrimeFaces.monitorDownload(start, stop);" style="position: relative;" class="btn btn-primary" p:oncomplete="#{cargueController.onConpleteMethodhere()}">
+                            <h:commandButton value="Descargar" onclick="PrimeFaces.monitorDownload(start, stop);" style="position: relative;" class="btn btn-primary">
                                 <p:fileDownload id="buton" value="#{cargueController.getArchivoDownl(item.anexo,item.nombreArchivo,item.tipoArchivo)}"/>
                             </h:commandButton>
                         </div>
