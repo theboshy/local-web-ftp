@@ -1,4 +1,4 @@
-package opd.server.localftp.controller;
+package opd.server.localftp.util;
 
 import java.util.List;
 import javax.faces.application.FacesMessage;

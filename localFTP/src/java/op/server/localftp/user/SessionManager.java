@@ -1,4 +1,4 @@
-package opd.server.localftp.controller;
+package op.server.localftp.user;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -7,9 +7,9 @@ import javax.inject.Named;
  *
  * @author pdgomezl
  */
-@Named(value = "sessionController")
+@Named(value = "sessionManager")
 @RequestScoped
-public class SessionController {
+public class SessionManager {
 
     private String serverUser;
 

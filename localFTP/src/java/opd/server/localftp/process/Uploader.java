@@ -1,5 +1,8 @@
-package opd.server.localftp.controller;
+package opd.server.localftp.process;
 
+import op.server.localftp.user.UrlController;
+import opd.server.localftp.util.extra.ZipController;
+import opd.server.localftp.util.JsfUtil;
 import opd.server.localftp.pojo.FileTempPOJO;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,14 +30,14 @@ import org.primefaces.model.UploadedFile;
  *
  * @author pdgomezl
  */
-@Named(value = "cargueController")
+@Named(value = "uploaderManager")
 @RequestScoped
-public class CargueController implements Serializable {
+public class Uploader implements Serializable {
 
     @Inject
     private UrlController urlController;
     @Inject
-    private ArchivosErroneosController archivosErroneosController;
+    private ErrorFiles archivosErroneosController;
     //private final int unitKiloByteInByte = 1024;
     //private final int unitMegaByteInKiloByte = 1048576;
     private UploadedFile file;
@@ -42,7 +45,7 @@ public class CargueController implements Serializable {
     // private FileTemp archivo = null;
     private List<FileTempPOJO> items;
     private String findBySomething;
-    private String principalFolder = System.getProperty("user.home");
+    private static final String PRINCIPAL_FOLDER = System.getProperty("user.home");
 
     public UploadedFile getFile() {
         return file;
@@ -78,18 +81,18 @@ public class CargueController implements Serializable {
 
                 File archivoTemp = new File(file.getFileName());
 
-                Path path = Paths.get(principalFolder + urlController.getCarpeta());
+                Path path = Paths.get(PRINCIPAL_FOLDER + urlController.getCarpeta());
                 if (!Files.exists(path)) {
                     Files.createDirectories(path);
                 }
 
-                urlToMove = principalFolder + urlController.getCarpeta() + "\\" + archivoTemp.getName();
+                urlToMove = PRINCIPAL_FOLDER + urlController.getCarpeta() + "\\" + archivoTemp.getName();
 
                 archivoTemp = new File(urlToMove);
                 if (archivoTemp.exists()) {
 
                     archivosErroneosController.getNombresArchivosErroneos().add(file);
-                    archivosErroneosController.setSelected(principalFolder + urlController.getCarpeta() + "\\");
+                    archivosErroneosController.setSelected(PRINCIPAL_FOLDER + urlController.getCarpeta() + "\\");
                     JsfUtil.addWarningMessage("El archivo " + file.getFileName() + " ya existe");
 
                     //archivoTemp.delete();
@@ -215,8 +218,8 @@ public class CargueController implements Serializable {
         try {
             if (items == null) {
                 items = new ArrayList<>();
-                if (!urlController.getCarpeta().equals(principalFolder) || urlController.getCarpeta() != null) {
-                    File dir = new File(principalFolder + urlController.getCarpeta());
+                if (!urlController.getCarpeta().equals(PRINCIPAL_FOLDER) || urlController.getCarpeta() != null) {
+                    File dir = new File(PRINCIPAL_FOLDER + urlController.getCarpeta());
                     File[] ficheros = dir.listFiles();
                     if (dir.exists()) {
                         if (ficheros != null) {
@@ -224,7 +227,7 @@ public class CargueController implements Serializable {
                                 fileTempPOJO = new FileTempPOJO();
                                 fileTempPOJO.setNombreArchivo(extracOnlyName(fichero.getName()));
                                 if (fileTempPOJO.getNombreArchivo().equals("")) {
-                                    File fileTempToDelete = new File(principalFolder + urlController.getCarpeta() + extractExtension(fichero.getName()) + ZipController.getType());
+                                    File fileTempToDelete = new File(PRINCIPAL_FOLDER + urlController.getCarpeta() + extractExtension(fichero.getName()) + ZipController.getType());
                                     if (fileTempToDelete.exists()) {
                                         fileTempToDelete.delete();
                                     }

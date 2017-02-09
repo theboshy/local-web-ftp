@@ -1,5 +1,6 @@
-package opd.server.localftp.controller;
+package opd.server.localftp.process;
 
+import opd.server.localftp.util.JsfUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -14,9 +15,9 @@ import org.primefaces.model.UploadedFile;
  *
  * @author pdgomezl
  */
-@Named(value = "archivosErroneosController")
+@Named(value = "errorFiles")
 @SessionScoped
-public class ArchivosErroneosController implements Serializable {
+public class ErrorFiles implements Serializable {
 
     private List<UploadedFile> nombresArchivosErroneos = new ArrayList<>();
     private String ruta;
@@ -24,7 +25,7 @@ public class ArchivosErroneosController implements Serializable {
     /**
      * Creates a new instance of ArchivosErroneosontroller
      */
-    public ArchivosErroneosController() {
+    public ErrorFiles() {
     }
 
     public List<UploadedFile> getNombresArchivosErroneos() {

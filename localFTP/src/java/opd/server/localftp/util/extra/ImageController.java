@@ -1,4 +1,4 @@
-package opd.server.localftp.controller;
+package opd.server.localftp.util.extra;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -13,8 +13,6 @@ import javax.inject.Named;
 @Named(value = "imageController")
 @RequestScoped
 public class ImageController implements Serializable {
-
-    private String ruta;
 
     public String getRuta() throws IOException {
         /*
