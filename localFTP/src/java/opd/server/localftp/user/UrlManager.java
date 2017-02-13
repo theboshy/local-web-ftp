@@ -10,7 +10,7 @@ import javax.enterprise.context.SessionScoped;
  */
 @Named(value = "urlController")
 @SessionScoped
-public class UrlController implements Serializable {
+public class UrlManager implements Serializable {
 
     private String carpeta = "\\Desktop\\side deck\\";
     private String userHomeDesktop = System.getProperty("user.home") + "\\Desktop\\";
@@ -20,7 +20,7 @@ public class UrlController implements Serializable {
     /**
      * Creates a new instance of UrlController
      */
-    public UrlController() {
+    public UrlManager() {
     }
 
     public String getCarpeta() {
