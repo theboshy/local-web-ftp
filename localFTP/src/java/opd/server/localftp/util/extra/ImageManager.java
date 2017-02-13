@@ -12,7 +12,7 @@ import javax.inject.Named;
  */
 @Named(value = "imageController")
 @RequestScoped
-public class ImageController implements Serializable {
+public class ImageManager implements Serializable {
 
     public String getRuta() throws IOException {
         /*
