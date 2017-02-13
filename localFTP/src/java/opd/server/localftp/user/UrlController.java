@@ -1,4 +1,4 @@
-package op.server.localftp.user;
+package opd.server.localftp.user;
 
 import java.io.Serializable;
 import javax.inject.Named;
