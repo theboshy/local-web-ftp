@@ -1,6 +1,6 @@
 package opd.server.localftp.process;
 
-import opd.server.localftp.user.UrlController;
+import opd.server.localftp.user.UrlManager;
 import opd.server.localftp.util.extra.ZipController;
 import opd.server.localftp.util.JsfUtil;
 import opd.server.localftp.pojo.FileTempPOJO;
@@ -35,7 +35,7 @@ import org.primefaces.model.UploadedFile;
 public class Uploader implements Serializable {
 
     @Inject
-    private UrlController urlController;
+    private UrlManager urlController;
     @Inject
     private ErrorFiles archivosErroneosController;
     //private final int unitKiloByteInByte = 1024;
