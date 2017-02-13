@@ -8,6 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import opd.server.localftp.user.UrlController;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -17,9 +20,11 @@ public class ZipController {
 
     private static ZipOutputStream zipOutputStream;
     private static String type = ".7z";
+    private static UrlController urlController;
 
     public static void folderToZip(String fileName)
             throws IOException, FileNotFoundException {
+        urlController = new UrlController();
         File file = new File(fileName);
         zipOutputStream = new ZipOutputStream(new FileOutputStream(file + type));
         recurseFiles(file);
@@ -38,7 +43,10 @@ public class ZipController {
         } else {
             byte[] buf = new byte[1024];
             int len;
-            ZipEntry zipEntry = new ZipEntry(file.toString());
+            /*
+            String replace = urlController.getHome() + urlController.getCarpeta();
+            String s = file.toString().replace(replace, "");*/
+            ZipEntry zipEntry = new ZipEntry(file.toString().replace(urlController.getHome() + urlController.getCarpeta(), ""));
             FileInputStream fin = new FileInputStream(file);
             try (BufferedInputStream in = new BufferedInputStream(fin)) {
                 zipOutputStream.putNextEntry(zipEntry);

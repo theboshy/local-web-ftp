@@ -1,6 +1,6 @@
 package opd.server.localftp.process;
 
-import op.server.localftp.user.UrlController;
+import opd.server.localftp.user.UrlController;
 import opd.server.localftp.util.extra.ZipController;
 import opd.server.localftp.util.JsfUtil;
 import opd.server.localftp.pojo.FileTempPOJO;
