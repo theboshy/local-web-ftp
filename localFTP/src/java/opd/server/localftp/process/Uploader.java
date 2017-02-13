@@ -1,7 +1,7 @@
 package opd.server.localftp.process;
 
 import opd.server.localftp.user.UrlManager;
-import opd.server.localftp.util.extra.ZipController;
+import opd.server.localftp.util.extra.ZipManager;
 import opd.server.localftp.util.JsfUtil;
 import opd.server.localftp.pojo.FileTempPOJO;
 import java.io.File;
@@ -227,7 +227,7 @@ public class Uploader implements Serializable {
                                 fileTempPOJO = new FileTempPOJO();
                                 fileTempPOJO.setNombreArchivo(extracOnlyName(fichero.getName()));
                                 if (fileTempPOJO.getNombreArchivo().equals("")) {
-                                    File fileTempToDelete = new File(PRINCIPAL_FOLDER + urlController.getCarpeta() + extractExtension(fichero.getName()) + ZipController.getType());
+                                    File fileTempToDelete = new File(PRINCIPAL_FOLDER + urlController.getCarpeta() + extractExtension(fichero.getName()) + ZipManager.getType());
                                     if (fileTempToDelete.exists()) {
                                         fileTempToDelete.delete();
                                     }
@@ -281,8 +281,8 @@ public class Uploader implements Serializable {
             File fileFromDirectory = new File(archivoPath);
             if (archivoTemp != null && fileFromDirectory.exists()) {
                 if (archivoTemp.startsWith(".")) {
-                    ZipController.folderToZip(archivoPath);
-                    defaultStreamedContent = new DefaultStreamedContent(new FileInputStream(archivoPath + ZipController.getType()), "", withoutChar(archivoTemp, '.') + ZipController.getType());
+                    ZipManager.folderToZip(archivoPath);
+                    defaultStreamedContent = new DefaultStreamedContent(new FileInputStream(archivoPath + ZipManager.getType()), "", withoutChar(archivoTemp, '.') + ZipManager.getType());
                 } else {
                     defaultStreamedContent = new DefaultStreamedContent(new FileInputStream(fileFromDirectory), "", archivoTemp);
                 }

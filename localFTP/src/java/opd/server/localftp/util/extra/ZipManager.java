@@ -8,22 +8,31 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import opd.server.localftp.user.UrlManager;
 
 /**
  *
  * @author pdgomezl
  */
-public class ZipController {
+public class ZipManager {
 
     private static ZipOutputStream zipOutputStream;
     private static String type = ".7z";
-    private static UrlManager urlController;
+    private static String root = "";
+    private static String rootName;
 
     public static void folderToZip(String fileName)
             throws IOException, FileNotFoundException {
-        urlController = new UrlManager();
         File file = new File(fileName);
+        //------------------>
+        rootName = fileName;
+        for (char object : String.valueOf(new StringBuilder(rootName).reverse()).toCharArray()) {
+            if (object != '\\') {
+                root += object;
+            } else {
+                break;
+            }
+        }
+        //------------------>
         zipOutputStream = new ZipOutputStream(new FileOutputStream(file + type));
         recurseFiles(file);
         zipOutputStream.close();
@@ -44,7 +53,7 @@ public class ZipController {
             /*
             String replace = urlController.getHome() + urlController.getCarpeta();
             String s = file.toString().replace(replace, "");*/
-            ZipEntry zipEntry = new ZipEntry(file.toString().replace(urlController.getHome() + urlController.getCarpeta(), ""));
+            ZipEntry zipEntry = new ZipEntry(file.toString().replace(rootName, new StringBuilder(root).reverse()));
             FileInputStream fin = new FileInputStream(file);
             try (BufferedInputStream in = new BufferedInputStream(fin)) {
                 zipOutputStream.putNextEntry(zipEntry);
