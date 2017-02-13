@@ -53,7 +53,7 @@ public class ZipManager {
             /*
             String replace = urlController.getHome() + urlController.getCarpeta();
             String s = file.toString().replace(replace, "");*/
-            ZipEntry zipEntry = new ZipEntry(file.toString().replace(rootName, new StringBuilder(root).reverse()));
+            ZipEntry zipEntry = new ZipEntry(file.toString().replace(rootName, new StringBuilder(root).reverse() + "->"));
             FileInputStream fin = new FileInputStream(file);
             try (BufferedInputStream in = new BufferedInputStream(fin)) {
                 zipOutputStream.putNextEntry(zipEntry);
