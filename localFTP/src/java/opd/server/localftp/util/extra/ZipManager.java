@@ -17,7 +17,7 @@ public class ZipManager {
 
     private static ZipOutputStream zipOutputStream;
     private static String type = ".7z";
-    private static String root = "";
+    private static String root;
     private static String rootName;
 
     public static void folderToZip(String fileName)
@@ -25,6 +25,7 @@ public class ZipManager {
         File file = new File(fileName);
         //------------------>
         rootName = fileName;
+        root = "";
         for (char object : String.valueOf(new StringBuilder(rootName).reverse()).toCharArray()) {
             if (object != '\\') {
                 root += object;
@@ -54,14 +55,16 @@ public class ZipManager {
             String replace = urlController.getHome() + urlController.getCarpeta();
             String s = file.toString().replace(replace, "");*/
             ZipEntry zipEntry = new ZipEntry(file.toString().replace(rootName, new StringBuilder(root).reverse() + "->"));
-            FileInputStream fin = new FileInputStream(file);
-            try (BufferedInputStream in = new BufferedInputStream(fin)) {
-                zipOutputStream.putNextEntry(zipEntry);
-                while ((len = in.read(buf)) >= 0) {
-                    zipOutputStream.write(buf, 0, len);
+            try (FileInputStream fin = new FileInputStream(file)) {
+                try (BufferedInputStream in = new BufferedInputStream(fin)) {
+                    zipOutputStream.putNextEntry(zipEntry);
+                    while ((len = in.read(buf)) >= 0) {
+                        zipOutputStream.write(buf, 0, len);
+                    }
                 }
+                zipOutputStream.closeEntry();
+                fin.close();
             }
-            zipOutputStream.closeEntry();
         }
     }
 
