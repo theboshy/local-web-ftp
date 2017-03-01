@@ -88,11 +88,14 @@
     </h:head>
     <h:body id="the-body">
         <p:growl id="growl" autoUpdate="true" life="5000"/>
-        <div id="form11" style="margin-top: 6px;">
+        <div id="form11" style="margin-top: 8px;">
             <h:form id="form1">
                 <h:outputLabel id="path" value="#{urlController.home}" style="color: #cc0000"/>
                 <!--<input type="file" webkitdirectory="true" directory="true" multiple="true" value="#{urlController.carpeta}" onchange="this.form.submit()"/>-->
-                <h:inputText id="folder" value="#{urlController.carpeta}" onchange="this.form.submit()" size="17" required="true" requiredMessage="Proporciona una carpeta contenedora"/>
+                <p:inplace label="#{urlController.carpeta}" editor="true" effectSpeed="fast">
+                    <h:inputText id="folder" value="#{urlController.carpeta}" size="17" required="true" requiredMessage="Proporciona una carpeta contenedora"/>
+                    <p:ajax event="save" update="tables"/>
+                </p:inplace>
             </h:form>
         </div>
         <h:form id="form" enctype="multipart/form-data">
