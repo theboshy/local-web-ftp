@@ -1,7 +1,7 @@
 package opd.server.localftp.process;
 
 import opd.server.localftp.user.UrlManager;
-import opd.server.localftp.util.extra.ZipManager;
+import opd.server.localftp.util.intern.ZipManager;
 import opd.server.localftp.util.JsfUtil;
 import opd.server.localftp.pojo.FileTempPOJO;
 import java.io.File;

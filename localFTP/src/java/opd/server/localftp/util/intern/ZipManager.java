@@ -1,4 +1,4 @@
-package opd.server.localftp.util.extra;
+package opd.server.localftp.util.intern;
 
 import java.io.BufferedInputStream;
 import java.io.File;
