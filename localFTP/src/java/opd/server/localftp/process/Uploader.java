@@ -46,6 +46,11 @@ public class Uploader implements Serializable {
     private List<FileTempPOJO> items;
     private String findBySomething;
     private static final String PRINCIPAL_FOLDER = System.getProperty("user.home");
+    //BYTES A SU EQUIVALENTE MAYOR
+    private static final double KILO = 1024.0;
+    private static final double MEGA = Math.pow(KILO, 2);
+    private static final double GIGA = Math.pow(MEGA, 2);
+    private static final double TERA = Math.pow(GIGA, 2);
 
     public UploadedFile getFile() {
         return file;
@@ -304,20 +309,19 @@ public class Uploader implements Serializable {
      * bytes sobre-pasa un KB entonces retornara MB)
      */
     public String informaticSize(long bytes) {
-        double kb = bytes / 1024.0;
-        double mb = bytes / 1048576.0;
-        /*
-        double gb = bytes / Math.pow(mb, 2);
-        double tb = bytes / Math.pow(gb, 2);
-         */
+        double kb = bytes / KILO;
+        double mb = bytes / MEGA;
+        double gb = bytes / GIGA;
+        double tb = bytes / TERA;
+
         DecimalFormat dec = new DecimalFormat("0.00");
 
         String size = "0 PTBytes";
-        /*if (tb > 1) {
+        if (tb > 1) {
             size = dec.format(tb).concat(" TB");
         } else if (gb > 1) {
             size = dec.format(gb).concat(" GB");
-        } else*/ if (mb > 1) {
+        } else if (mb > 1) {
             size = dec.format(mb).concat(" MB");
         } else if (kb > 1) {
             size = dec.format(kb).concat(" KB");
