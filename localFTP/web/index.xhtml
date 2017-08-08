@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
         <link rel="shortcut icon" href="resources/images/connection.png" type="image/ico" />
         <link href="resources/css/growl.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/filesIcons.css" rel="stylesheet" type="text/css"/>
         <meta http-equiv="Content-Type"  content="text/html;charset=UTF-8"/>
         <meta name="@author" content="Peter David Gomez Lobo"/>
         <title>FTP/#{serverUser}</title>
@@ -87,6 +88,8 @@
         </style>
     </h:head>
     <h:body id="the-body">
+        <script src="resources/js/utils.js" type="text/javascript"></script>
+        <!-- -->
         <p:growl id="growl" autoUpdate="true" life="5000"/>
         <div id="form11" style="margin-top: 8px;">
             <h:form id="form1">
@@ -126,8 +129,8 @@
                         <img style="margin-top: 20px;" src="resources/images/internet.png" alt="no hay archivos" width="256" height="230"/>
                     </div>
                 </h:form>
-                <ui:repeat  value="#{uploaderManager.items}" var="item"> 
-                    <div class="col-lg-3 col-xs-6" style="margin-top:-1%;margin-bottom: 1%;z-index: 2;">
+                <ui:repeat id="repeat_files" value="#{uploaderManager.items}" var="item"> 
+                    <div id="panel_properties" class="col-lg-3 col-xs-6" style="margin-top:-1%;margin-bottom: 1%;z-index: 2;">
                         <div class="panel panel-info">
                             <div class="panel-heading" id="selec">
                                 <h:outputText id="rchi" value="#{uploaderManager.incompleteText(item.nombreArchivo.concat(item.tipoArchivo),maxName)}" style="font-weight: bold;font-size: 16px"/><span style="#{item.nombreArchivo==null ? 'color: #808080':'color: #ff6666'}"><h:outputText value="#{item.nombreArchivo==null ? '/':'.'}"/><h:outputText value="#{uploaderManager.incompleteText(item.tipoArchivo,11)}"/></span>
@@ -153,11 +156,19 @@
                                 <h:outputText style="color: #ff6666" value="#{item.nombreArchivo!=null ? item.size:'~'}"/>
                             </div>
                         </div>
-                        <div style="float: right;margin-top: -133px;margin-right: 2px">
-                            <h:commandButton value="Descargar" onclick="PrimeFaces.monitorDownload(start, stop);" style="position: relative;" class="btn btn-primary">
-                                <p:fileDownload id="buton" value="#{uploaderManager.getArchivoDownl(item.anexo,item.nombreArchivo,item.tipoArchivo)}"/>
-                            </h:commandButton>
-                        </div>
+                        <h:panelGroup>
+                            <div id="opciones_archivo" style="float: right;margin-top: -38.2%;margin-right: 2%">
+                                <!-- class="btn btn-primary" -->
+                                <!-- action="PrimeFaces.monitorDownload(start, stop);"-->
+                                <h:commandLink  id="descargar_boton" >
+                                    <p:fileDownload id="buton" value="#{uploaderManager.getArchivoDownl(item.anexo,item.nombreArchivo,item.tipoArchivo)}"/>
+                                    <h:graphicImage id="download_file_image" value="resources/images/download.png"  style="position: relative;" width="30px" height="30px" class="download-button"/>
+                                </h:commandLink>
+                                <!-- se renderisa cuando un archivo es de tipo mp3 : la idea es que pueda reproudcirlo TODO
+                                <h:graphicImage id="play_sound_image" value="resources/images/arrows.png" class="playsound-button" style="position: relative;" width="28px" height="28px" rendered="#{item.tipoArchivo eq 'mp3' || item.tipoArchivo eq 'ogg'}" onclick="" />
+                                -->
+                            </div>
+                        </h:panelGroup>
                     </div>
                 </ui:repeat>
             </h:form>
