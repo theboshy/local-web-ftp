@@ -165,7 +165,7 @@
                                     <h:graphicImage id="download_file_image" value="resources/images/download.png"  style="position: relative;" width="30px" height="30px" class="download-button"/>
                                 </h:commandLink>
                                 <!-- se renderisa cuando un archivo es de tipo mp3 : la idea es que pueda reproudcirlo TODO
-                                <h:graphicImage id="play_sound_image" value="resources/images/arrows.png" class="playsound-button" style="position: relative;" width="28px" height="28px" rendered="#{item.tipoArchivo eq 'mp3' || item.tipoArchivo eq 'ogg'}" onclick="" />
+                                <h:graphicImage id="play_sound_image" value="resources/images/arrows.png" class="playsound-button" style="position: relative;" width="28px" height="28px" rendered="#-{item.tipoArchivo eq 'mp3' || item.tipoArchivo eq 'ogg'}" onclick="" />
                                 -->
                             </div>
                         </h:panelGroup>
