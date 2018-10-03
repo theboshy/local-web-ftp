@@ -19,6 +19,7 @@ public class ZipManager {
     private static String type = ".7z";
     private static String root;
     private static String rootName;
+     private final static String INDICE = "";
 
     public static void folderToZip(String fileName)
             throws IOException, FileNotFoundException {
@@ -54,7 +55,7 @@ public class ZipManager {
             /*
             String replace = urlController.getHome() + urlController.getCarpeta();
             String s = file.toString().replace(replace, "");*/
-            ZipEntry zipEntry = new ZipEntry(file.toString().replace(rootName, new StringBuilder(root).reverse() + "->"));
+            ZipEntry zipEntry = new ZipEntry(file.toString().replace(rootName, INDICE));
             try (FileInputStream fin = new FileInputStream(file)) {
                 try (BufferedInputStream in = new BufferedInputStream(fin)) {
                     zipOutputStream.putNextEntry(zipEntry);
