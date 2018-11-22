@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pa="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/localFTPTemplate.xhtml">
+
+            <ui:define name="content">
+
+                <f:event listener="#{sessionManager.validarIngreso()}" type="preRenderView"/>
+                <p:growl id="growl" autoUpdate="true" life="5000"/>
+                <div id="form11" style="margin-top: 8px;">
+                    <h:form id="form1">                        
+                        <h:outputLabel id="path" value="#{urlController.home}" style="color: #cc0000"/>                
+                        <p:inplace label="#{urlController.carpeta}" editor="true" effectSpeed="fast">
+                            <h:inputText id="folder" value="#{urlController.carpeta}" size="17" required="true" requiredMessage="Proporciona una carpeta contenedora"/>
+                            <p:ajax event="save" update="tables"/>
+                        </p:inplace>
+                        <p:commandButton icon="ui-icon-circle-close"
+                                         process="@this"
+                                         action="#{sessionManager.logout()}"/>
+                    </h:form>
+                </div>
+                <h:form id="form" enctype="multipart/form-data">
+                    <p:fileUpload sequential="false" style="margin-left: 20.5%;width: 800px;position: fixed;z-index: 99999" id="archivo" mode="advanced" skinSimple="true" label="Nuevo" uploadLabel="Subir" value="#{uploaderManager.file}" multiple="true"  fileUploadListener="#{uploaderManager.upload}" dragDropSupport="true" fileLimit="5" sizeLimit="#{GBBytes}" cancelLabel="Cancelar" fileLimitMessage="Solo se permite subir 5 archivos a la vez" invalidSizeMessage="solo se permiten archivos de maximo 100 MB /" update=":tables,:tables:subTables,:notbar,form3:coman,:form3,:findBy,:fomr1" transient="true"/>
+                </h:form>
+                <h:form id="form3">
+                    <center>
+                        <h:commandButton id="coman" value="Errores" onclick="PF('bar').show()" type="button"  rendered="#{!empty errorFiles.nombresArchivosErroneos}"/>
+                    </center>
+                </h:form>
+                <div>
+                    <h:form id="findBy">
+                        <h:inputText value="#{uploaderManager.findBySomething}" onchange="this.form.submit()" pa:placeholder="Buscar por..." rendered="#{!empty uploaderManager.items}" required="true" requiredMessage="Se necesita un valor para buscar"/>
+                    </h:form>
+                    <h:form id="fomr1" style="margin-top: -28px">
+                        <h:commandButton id="reset" actionListener="#{uploaderManager.reset()}" image="resources/images/refresh.png" style="margin-left: 56.1%" rendered="#{!empty uploaderManager.items}"/>
+                        <p:tooltip for="reset" value="Refrescar"/>
+                    </h:form>
+                </div>
+                <div id="infos" style="margin-top: 4%;margin-left: 9%;">
+                    <h:form id="tables">
+                        <h:form id="subTables" rendered="#{empty uploaderManager.items}">
+                            <div style="position: absolute;margin: 6% 31.5%">
+                                <ui:remove>
+                                    <h2 style="color: white">Parece que no hay ningun archivo <span style="color: red">Aun</span></h2>
+                                    <p style="color: white">Por que no <span style="color: red">intenta</span>, subir alguno?</p>
+                                </ui:remove>
+                                <img style="margin-top: 20px;" src="resources/images/internet.png" alt="no hay archivos" width="256" height="230"/>
+                            </div>
+                        </h:form>
+                        <ui:repeat id="repeat_files" value="#{uploaderManager.items}" var="item"> 
+                            <div id="panel_properties" class="col-lg-3 col-xs-6" style="margin-top:-1%;margin-bottom: 1%;z-index: 2;">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading" id="selec">
+                                        <h:outputText id="rchi" value="#{uploaderManager.incompleteText(item.nombreArchivo.concat(item.tipoArchivo),maxName)}" style="font-weight: bold;font-size: 16px"/><span style="#{item.nombreArchivo==null ? 'color: #808080':'color: #ff6666'}"><h:outputText value="#{item.nombreArchivo==null ? '/':'.'}"/><h:outputText value="#{uploaderManager.incompleteText(item.tipoArchivo,11)}"/></span>
+                                        <p:tooltip for="rchi" value="#{uploaderManager.contCharacters(item.nombreArchivo)>maxName ? item.nombreArchivo : 'Nombre Del Archivo'}" position="top" hideDelay="#{uploaderManager.contCharacters(item.nombreArchivo)>11 ? '3000':'100'}"/>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p:tooltip id="tool1" for="anexo" value="#{item.anexo}" position="top" hideDelay="#{uploaderManager.contCharacters(item.anexo)>maxAnexo ? '2000':'200'}"/>
+                                        <h:outputText id="anexo" value="#{uploaderManager.incompleteText(item.anexo,maxAnexo)}" style="width: 250px"/><br/>
+                                        <ui:remove>
+                                            <div style="position: absolute;margin-left: 48%;margin-top: -20px;">
+                                                <h:outputText id="fechayolo" value="#{item.fechaRegistro}">
+                                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm.a" timeZone="America/Bogota"/>
+                                                </h:outputText>
+                                                <p:tooltip id="tool2" for="fechayolo" value="Creado el dia " position="top"/>
+                                            </div>
+                                            <div style="position: absolute;margin-left: 48%;margin-top: 1px;">
+                                                <h:outputText id="fechayolo2" value="#{item.fechaModificacion}" rendered="#{!empty item.fechaModificacion}">
+                                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm.a" timeZone="America/Bogota"/>
+                                                </h:outputText>
+                                                <p:tooltip id="tool3" for="fechayolo2" value="Modificado el dia" position="top"/>
+                                            </div>
+                                        </ui:remove>
+                                        <h:outputText style="color: #ff6666" value="#{item.nombreArchivo!=null ? item.size:'~'}"/>
+                                    </div>
+                                </div>
+                                <h:panelGroup>
+                                    <div id="opciones_archivo" style="float: right;margin-top: -38.2%;margin-right: 2%">
+                                        <!-- class="btn btn-primary" -->
+                                        <!-- action="PrimeFaces.monitorDownload(start, stop);"-->
+                                        <h:commandLink  id="descargar_boton" >
+                                            <p:fileDownload id="buton" value="#{uploaderManager.getArchivoDownl(item.anexo,item.nombreArchivo,item.tipoArchivo)}"/>
+                                            <h:graphicImage id="download_file_image" value="resources/images/download.png"  style="position: relative;" width="30px" height="30px" class="download-button"/>
+                                        </h:commandLink>
+                                        <!-- se renderisa cuando un archivo es de tipo mp3 : la idea es que pueda reproudcirlo TODO
+                                        <h:graphicImage id="play_sound_image" value="resources/images/arrows.png" class="playsound-button" style="position: relative;" width="28px" height="28px" rendered="#{item.tipoArchivo eq 'mp3' || item.tipoArchivo eq 'ogg'}" onclick="" />
+                                        -->
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                        </ui:repeat>
+                    </h:form>
+                </div>
+                <p:notificationBar id="notbar" style="height: 34%;position: fixed;z-index: 9999999;" position="bottom" effect="slide" styleClass="top" widgetVar="bar">
+                    <div style="position: absolute;margin-left: 45%;margin-top: -31px">
+                        <h:form>
+                            <p:commandButton onclick="PF('bar').hide()" id="toggler" type="button" value="Cerrar" style="float:right" icon="ui-icon-arrowthick-1-s" />
+                        </h:form>
+                    </div>
+                    <h:form>
+                        <p:panel>
+                            <p:dataTable id="datalist" value="#{errorFiles.nombresArchivosErroneos}" var="item"
+                                         rowKey="#{item.fileName}" emptyMessage="No hay valores erroneos " paginator="true" rows="5" rowsPerPageTemplate="10,20,30,40,50"
+                                         >
+                                <p:column width="50">
+                                    <h:outputText value="#{item.fileName}"/>
+                                </p:column>
+                                <p:column width="50">
+                                    <h:outputText value="#{uploaderManager.informaticSize(item.size)}"/>
+                                </p:column>
+                                <p:column width="20">
+                                    <p:commandButton value="Remplazar" actionListener="#{errorFiles.reemplazar(item)}" update="datalist,tables,form3,findBy,fomr1"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </p:notificationBar>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

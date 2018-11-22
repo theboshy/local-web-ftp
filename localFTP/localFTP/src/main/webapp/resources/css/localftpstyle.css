@@ -1,0 +1,60 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 9/11/2018, 12:00:17 PM
+    Author     : Sergio
+*/
+
+/* clase local para visualizar mejor bloques de ejemplo */
+.bs-example {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+#buton{
+    float: right;
+}
+#infos{
+    max-width: available;
+    margin-left: 10%
+}
+#form11{
+    position: fixed;
+    z-index: 999999;
+    margin-left: 58.7%;
+}
+#form3{ 
+    position: fixed;
+    z-index: 999999;
+    margin-left: 53.3%;
+    margin-top: 6px;
+}
+#findBy{
+    z-index: 999999;
+    padding-top: 8%;
+    padding-left: 43%;
+}
+.ui-inputfield {
+    margin: 0;
+    outline: medium none;
+    padding: 2px;
+    font-weight: normal;
+}
+.ui-fileupload-preview{
+    content: url(resources/images/exito.png);
+    max-width: 53px;
+    max-height: 41px;
+}/*
+.ui-corner-all{
+    background-color: #0099cc;
+}*/
+.ui-messages-error-summary{
+    color: #ffffff;                
+}
+.ui-icon, .ui-icon-close{
+    color: #9900cc;
+}
