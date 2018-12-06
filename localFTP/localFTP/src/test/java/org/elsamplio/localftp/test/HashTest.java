@@ -7,7 +7,7 @@ package org.elsamplio.localftp.test;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.elsamplio.localftp.util.HashPw;
+import org.localftp.util.HashPw;
 
 /**
  *
