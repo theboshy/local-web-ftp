@@ -1,0 +1,14 @@
+org\localftp\util\HashPw.class
+org\localftp\intern\ZipManager.class
+org\localftp\intern\natives\CommandManager.class
+org\localftp\process\ErrorFiles.class
+org\localftp\intern\natives\Unix.class
+org\localftp\user\SessionManager.class
+org\localftp\intern\ImageManager.class
+org\localftp\user\UrlManager.class
+org\localftp\process\Deployer.class
+org\localftp\util\JsfUtil$PersistAction.class
+org\localftp\pojo\FileTempPOJO.class
+org\localftp\util\JsfUtil.class
+org\localftp\process\Uploader.class
+org\localftp\util\JsonUtil.class

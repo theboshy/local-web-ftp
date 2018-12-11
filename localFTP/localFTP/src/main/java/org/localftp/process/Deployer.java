@@ -24,7 +24,8 @@ import org.localftp.util.JsonUtil;
 public class Deployer implements Serializable {
 
     private String deployName;
-    private static final String DEPLOY_MGR = "deploy --name %s %s";
+    private String contextRootName;
+    private static final String DEPLOY_MGR = "deploy --name %s --contextroot %s %s";
     private static final String DEPLOY_UN_MGR = "undeploy %s";
     private static final String DEPLOY_PARM_CONTEXT = "server_contex_root";
     private static final String DEPLOY_PARM_ROOT_COMMAND = "root_command";
@@ -47,7 +48,7 @@ public class Deployer implements Serializable {
             serverRootCommand = json.get(DEPLOY_PARM_ROOT_COMMAND).toString();
             if ((!serverContext.isEmpty() && !serverRootCommand.isEmpty())
                     && Files.exists(Paths.get(serverContext + "\\" + serverRootCommand))) {
-                Object buildCommand = String.format(serverContext + "\\" + serverRootCommand + " " + DEPLOY_MGR, deployName.isEmpty() ? "default_name" : deployName, "\"" + appRoot + "\"");
+                Object buildCommand = String.format(serverContext + "\\" + serverRootCommand + " " + DEPLOY_MGR, deployName.isEmpty() ? "default_name" : deployName, contextRootName.isEmpty() ? "default_name" : contextRootName, "\"" + appRoot + "\"");
                 Object unBuildCommand = String.format(serverContext + "\\" + serverRootCommand + " " + DEPLOY_UN_MGR, deployName.isEmpty() ? "default_name" : deployName);
                 CommandManager.execCommand(unBuildCommand.toString());
                 String result = CommandManager.execCommand(buildCommand.toString());
@@ -64,6 +65,14 @@ public class Deployer implements Serializable {
 
     public void setDeployName(String deployName) {
         this.deployName = deployName;
+    }
+
+    public String getContextRootName() {
+        return contextRootName;
+    }
+
+    public void setContextRootName(String contextRootName) {
+        this.contextRootName = contextRootName;
     }
 
 }

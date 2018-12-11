@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="org.elsamplio.localftp.test.HashTest" time="1.465" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="org.elsamplio.localftp.test.HashTest" time="2.711" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_181\jre\bin"/>
@@ -29,7 +29,7 @@
     <property name="maven.ext.class.path" value="C:\Program Files\NetBeans 8.2\java\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files\NetBeans 8.2\java\maven\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_181\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\OpenVPN\bin;C:\Program Files\apache-maven-3.5.4\bin;;C:\WINDOWS\System32\OpenSSH\;C:\Go\bin;C:\TDM-GCC-64\bin;C:\Users\Acer\AppData\Local\Microsoft\WindowsApps;C:\Users\Acer\go\bin;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_181\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\OpenVPN\bin;C:\Program Files\apache-maven-3.5.4\bin;C:\WINDOWS\System32\OpenSSH\;C:\Go\bin;C:\TDM-GCC-64\bin;C:\Program Files\Git\cmd;C:\Users\Acer\AppData\Local\Microsoft\WindowsApps;C:\Users\Acer\go\bin;C:\Program Files\Docker Toolbox;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -61,5 +61,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="org.elsamplio.localftp.test.HashTest" name="hashPw" time="1.273"/>
+  <testcase classname="org.elsamplio.localftp.test.HashTest" name="hashPw" time="2.495"/>
 </testsuite>
