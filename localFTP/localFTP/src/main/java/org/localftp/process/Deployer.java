@@ -12,6 +12,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.json.simple.JSONObject;
 import org.localftp.intern.natives.CommandManager;
+import org.localftp.pojo.FileTempPOJO;
 import org.localftp.util.JsfUtil;
 import org.localftp.util.JsonUtil;
 
@@ -22,6 +23,8 @@ import org.localftp.util.JsonUtil;
 @Named(value = "deployerBean")
 @SessionScoped
 public class Deployer implements Serializable {
+
+    private FileTempPOJO fileTempPOJOSelected;
 
     private String deployName;
     private String contextRootName;
@@ -74,5 +77,19 @@ public class Deployer implements Serializable {
     public void setContextRootName(String contextRootName) {
         this.contextRootName = contextRootName;
     }
+
+    public void setActualSelectedFile(FileTempPOJO temFile) {
+        this.fileTempPOJOSelected = temFile;
+    }
+
+    public FileTempPOJO getFileTempPOJOSelected() {
+        return fileTempPOJOSelected;
+    }
+
+    public void setFileTempPOJOSelected(FileTempPOJO fileTempPOJOSelected) {
+        this.fileTempPOJOSelected = fileTempPOJOSelected;
+    }
+    
+    
 
 }
