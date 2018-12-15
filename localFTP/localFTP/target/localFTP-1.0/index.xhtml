@@ -89,25 +89,25 @@
                                             <p:fileDownload id="buton" value="#{uploaderManager.getArchivoDownl(item.anexo,item.nombreArchivo,item.tipoArchivo)}"/>
                                             <h:graphicImage id="download_file_image" value="resources/images/download.png"  style="position: relative;" width="30px" height="30px" class="download-button"/>
                                         </h:commandLink>
-                                        <h:graphicImage  id="deploy_war_option" value="resources/images/despliegue.png" class="playsound-button" style="position: relative;" width="28px" height="28px" rendered="#{item.tipoArchivo eq 'war'}" onclick="PF('dlg2').show();"/>
-                                        <p:dialog id="dialogo" header="Deploy #{item.nombreArchivo}" widgetVar="dlg2" height="160" width="250">
-                                            <h:form > 
-                                                <h:outputLabel value="deploy name" style="color: #808080"/>
-                                                <br/>
-                                                <h:inputText id="deploy_name" value="#{deployerBean.deployName}"/>
-                                                <h:outputLabel value="context root" style="color: #808080"/>
-                                                <br/>
-                                                <h:inputText id="deploy_context_root" value="#{deployerBean.contextRootName}"/>
-                                                <br/>
-                                                <h:commandButton actionListener="#{deployerBean.processDeployApp(item.anexo)}" value="Deploy"/>
-                                            </h:form>
-                                        </p:dialog>
+                                        <h:graphicImage  id="deploy_war_option" value="resources/images/despliegue.png" class="playsound-button" style="position: relative;" width="28px" height="28px" rendered="#{item.tipoArchivo eq 'war'}" onclick="PF('dlg2_#{item.nombreArchivo}').show();"/>
                                         <!-- se renderisa cuando un archivo es de tipo mp3 : la idea es que pueda reproudcirlo TODO
                                         <h:graphicImage id="play_sound_image" value="resources/images/arrows.png" class="playsound-button" style="position: relative;" width="28px" height="28px" rendered="#{item.tipoArchivo eq 'mp3' || item.tipoArchivo eq 'ogg'}" onclick="" />
                                         -->
                                     </div>
                                 </h:panelGroup>
                             </div>
+                            <p:dialog id="dialogo"  style="z-index: -1" header="Deploy #{item.nombreArchivo}" widgetVar="dlg2_#{item.nombreArchivo}" height="160" width="250">
+                                <h:form>
+                                    <h:outputLabel value="deploy name" style="color: #808080"/>
+                                    <br/>
+                                    <h:inputText id="deploy_name" value="#{deployerBean.deployName}"/>
+                                    <h:outputLabel value="context root" style="color: #808080"/>
+                                    <br/>
+                                    <h:inputText id="deploy_context_root" value="#{deployerBean.contextRootName}"/>
+                                    <br/>
+                                    <p:commandButton process="@widgetVar(dlg2_#{item.nombreArchivo})" update="@form" actionListener="#{deployerBean.processDeployApp(item.anexo)}" value="Deploy"/>
+                                </h:form>
+                            </p:dialog>
                         </ui:repeat>
                     </h:form>
                 </div>
