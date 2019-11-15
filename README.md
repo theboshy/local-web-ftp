@@ -3,4 +3,4 @@
 FTP server for folders and files
 
 
-TODO : EDIT THE FUCK** README 
+TODO : EDIT THE FUC*** README 
